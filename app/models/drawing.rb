@@ -15,6 +15,18 @@ class Drawing < ActiveRecord::Base
   #   self.screenshot = open(shot.img_url)
   #   save!
   # end
+  def screenshot
+    # require 'phantomjs'
+    ws.capture("http://www.google.com/", "google.png") do |magick|
+    magick.combine_options do |c|
+    c.thumbnail "100x"
+    c.background "white"
+    c.extent "100x90"
+    c.gravity "north"
+    c.quality 85
+    end
+  end
+end
 
   # site = Website.new(url: 'http://reddit.com')
   # site.gen_screenshot!

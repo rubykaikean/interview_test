@@ -61,6 +61,27 @@ class DrawingsController < ApplicationController
     end
   end
 
+  def screenshot
+
+    screenshot = Webshot::Screenshot.new
+    screenshot.capture "http://www.google.com/", "output.png"
+
+    # require 'phantomjs'
+    # ws = Webshot::Screenshot.new
+    # ws.capture "http://www.google.com/", "google.png"
+    # ws.capture "http://www.google.com/", "google.png", width: 100, height: 90, quality: 85
+
+    # ws.capture("http://www.google.com/", "google.png") do |magick|
+    #   magick.combine_options do |c|
+    #     c.thumbnail "100x"
+    #     c.background "white"
+    #     c.extent "100x90"
+    #     c.gravity "north"
+    #     c.quality 85
+    #   end
+    # end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_drawing

@@ -1,5 +1,9 @@
 InterviewTest::Application.routes.draw do
-  resources :drawings
+  resources :drawings do
+    collection do 
+      get "screenshot"
+    end
+  end
 
   devise_for :users
   
