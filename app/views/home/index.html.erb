@@ -1,0 +1,11 @@
+<h3><u>Home</u></h3>
+
+<br>
+<% if user_signed_in? %> 
+
+Read To Work
+
+
+<div><%= link_to 'Edit User', edit_user_path(current_user.id) %></div>
+
+<% end %>
