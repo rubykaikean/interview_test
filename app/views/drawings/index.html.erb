@@ -1,5 +1,5 @@
-<h1>Listing drawings</h1>
-
+<h1>Listing drawings </h1>
+<button><%= link_to "home" , root_url %></button>
 <table>
   <thead>
     <tr>
@@ -15,7 +15,7 @@
     <% @drawings.each do |drawing| %>
       <tr>
         <td><%= drawing.name %></td>
-        <td><%= image_tag drawing.photo.url %></td>
+        <td><%= image_tag drawing.photo.url(:thumb) %></td>
         <td><%= link_to "screenshot", screenshot_drawings_path %></td>
         <td><%= link_to 'Show', drawing %></td>
         <td><%= link_to 'Edit', edit_drawing_path(drawing) %></td>

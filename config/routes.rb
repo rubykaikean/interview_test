@@ -1,7 +1,7 @@
 InterviewTest::Application.routes.draw do
   resources :drawings do
     collection do 
-      get "screenshot"
+      post "screenshot"
     end
   end
 

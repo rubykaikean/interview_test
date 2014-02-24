@@ -1,10 +1,12 @@
 class DrawingsController < ApplicationController
+  before_filter :authenticate_user! , except: [:show]
+
   before_action :set_drawing, only: [:show, :edit, :update, :destroy]
 
   # GET /drawings
   # GET /drawings.json
   def index
-    @drawings = Drawing.all
+    @drawings = Drawing.order('id DESC')
   end
 
   # GET /drawings/1
@@ -56,30 +58,33 @@ class DrawingsController < ApplicationController
   def destroy
     @drawing.destroy
     respond_to do |format|
-      format.html { redirect_to drawings_url }
+      format.html { redirect_to root_url }
       format.json { head :no_content }
     end
   end
 
   def screenshot
+    # render :text => params.to_json
+    url_path = params[:url]
+    screenshot = Webshot::Screenshot.instance
+    
 
-    screenshot = Webshot::Screenshot.new
-    screenshot.capture "http://www.google.com/", "output.png"
-
-    # require 'phantomjs'
-    # ws = Webshot::Screenshot.new
-    # ws.capture "http://www.google.com/", "google.png"
-    # ws.capture "http://www.google.com/", "google.png", width: 100, height: 90, quality: 85
-
-    # ws.capture("http://www.google.com/", "google.png") do |magick|
-    #   magick.combine_options do |c|
-    #     c.thumbnail "100x"
-    #     c.background "white"
-    #     c.extent "100x90"
-    #     c.gravity "north"
-    #     c.quality 85
-    #   end
-    # end
+      screenshot.capture "#{url_path}", 
+      "#{current_user.name}_#{current_user.id}.png", timeout: 2 do |magick|
+        magick.combine_options do |c|
+        c.thumbnail "500x"
+        c.extent "500x450"
+        #c.gravity "north"
+        c.quality 100
+      end
+    end
+    new_drawing = current_user.drawings.new
+    new_drawing.name = url_path
+    new_drawing.photo = open "#{Rails.root}/#{current_user.name}_#{current_user.id}.png"
+    new_drawing.save!
+    
+    redirect_to root_url , notice: 'Drawing was successfully capture.' 
+    
   end
 
   private

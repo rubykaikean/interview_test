@@ -2,10 +2,42 @@
 
 <br>
 <% if user_signed_in? %> 
+	
+	<%= form_tag screenshot_drawings_path ,:method =>"post" do %>
+		<%#= text_field_tag %>
+	<%= label_tag "Enter a url to capture" %>
+	<%= text_field_tag :url, nil ,placeholder: "Start with http://" %>
+	<%= submit_tag "submit" %>
 
-Read To Work
+	<% end %>
 
+<hr>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Drawing</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
 
-<div><%= link_to 'Edit User', edit_user_path(current_user.id) %></div>
+  <tbody>
+    <% @drawings.each do |drawing| %>
+      <tr>
+        <td><%= drawing.name %></td>
+        <td><%= image_tag drawing.photo.url(:thumb) %></td>
+        <td><%#= link_to "screenshot", screenshot_drawings_path %></td>
+        <td><%= link_to 'Show', drawing %></td>
+        <td><%#= link_to 'Edit', edit_drawing_path(drawing) %></td>
+        <td><%= link_to 'Destroy', drawing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
 
 <% end %>

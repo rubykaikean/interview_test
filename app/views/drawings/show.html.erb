@@ -5,5 +5,18 @@
   <%= @drawing.name %>
 </p>
 
-<%= link_to 'Edit', edit_drawing_path(@drawing) %> |
-<%= link_to 'Back', drawings_path %>
+<p>
+	
+	<%= image_tag @drawing.photo.url(:original) %>
+</p>
+<p>
+	Copy below link to friend
+	<br>
+	<strong>Shared link:</strong>
+	<%= request.url %>
+</p>
+<%#= link_to 'Edit', edit_drawing_path(@drawing) %>
+<% if user_signed_in? %>
+<%= link_to 'Back', root_url %>
+<% end %>
+
